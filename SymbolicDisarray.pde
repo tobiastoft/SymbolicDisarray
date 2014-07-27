@@ -8,6 +8,9 @@ int lf = 10;      // ASCII linefeed
 //Enable plotting?
 final boolean PLOTTING_ENABLED = true;
 
+//Label
+String label = "SYMBOLIC DISARRAY";
+
 //Plotter dimensions
 int xMin = 170;
 int yMin = 602;
@@ -40,15 +43,15 @@ void setup(){
   //Initialize plotter
   plotter.write("IN;SP1;");
   
-  //Wait 5 seconds while initializing
-  if (PLOTTING_ENABLED) {
-    delay(5000);
-  }
-  
   //Draw a label first (this is pretty cool to watch)
   float ty = map(80, 0, height, yMin, yMax);
   plotter.write("PU"+xMax+","+ty+";"); //Position pen
-  plotter.write("SI0.14,0.14;DI0,1;LBSYMBOLIC DISARRAY"+char(3)); //Draw label
+  plotter.write("SI0.14,0.14;DI0,1;LB" + label + char(3)); //Draw label
+  
+  //Wait 0.5 second per character while printing label
+  if (PLOTTING_ENABLED) {
+    delay(label.length() * 500);
+  }
     
 }
 
@@ -57,7 +60,7 @@ void draw(){
      but then we wouldn't have gotten live updating on screen while plotting */
   
   /* Draw a grid of predefined symbols */
-  int cols = 12; //Total cols. Current column is stored in 'col'
+  int cols = 13; //Total cols. Current column is stored in 'col'
   int rows = 22; //Total rows. Current row is stored in 'row'
   
   if (row < rows && col < cols){
@@ -127,7 +130,7 @@ class Symbol{
     points.add( new PVector(1,0) );
     points.add( new PVector(0,0) );
     
-    //and here's a chevron
+    //here's a chevron
     points.add( new PVector(0,0) );
     points.add( new PVector(0.5,0.5) );
     points.add( new PVector(0,1) );
@@ -135,7 +138,38 @@ class Symbol{
     points.add( new PVector(1.5,0.5) );
     points.add( new PVector(1,0) );
     points.add( new PVector(0,0) );
+    
+    //here's a bunch of upside down crosses \m/
+    w /= 3; //scale down to a third of the size
+    h /= 3;
+    points.add( new PVector(0,1) );
+    points.add( new PVector(2,1) );
+    points.add( new PVector(2,0) );
+    points.add( new PVector(3,0) );
+    points.add( new PVector(3,1) );
+    points.add( new PVector(4,1) );
+    points.add( new PVector(4,2) );
+    points.add( new PVector(3,2) );
+    points.add( new PVector(3,3) );
+    points.add( new PVector(2,3) );
+    points.add( new PVector(2,2) );
+    points.add( new PVector(0,2) );
+    points.add( new PVector(0,1) );
+    
+    
+    //here's a simple lightning bolt shape
+    w /= 7; //scale down
+    h /= 7;
+    points.add( new PVector(5,0) );
+    points.add( new PVector(0,4) );
+    points.add( new PVector(4.2, 2.3) );
+    points.add( new PVector(4,5) );
+    points.add( new PVector(9,1) );
+    points.add( new PVector(4.8,2.7) );
+    points.add( new PVector(5,0) );
+    
     */
+    
   }
   
   void drawIt(){  
